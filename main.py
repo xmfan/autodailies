@@ -1,5 +1,13 @@
 import tkinter as tk
 from PIL import Image, ImageTk, ImageDraw, ImageFont, ImageGrab
+from model.agent import Agent
+
+# Only supports this resolution at the moment
+GAME_TOP_LEFT_X = 0
+GAME_TOP_LEFT_Y = 72
+GAME_WIDTH = 512
+GAME_HEIGHT = 512
+GAME_BBOX = (GAME_TOP_LEFT_X, GAME_TOP_LEFT_Y, GAME_TOP_LEFT_X + GAME_WIDTH, GAME_TOP_LEFT_Y + GAME_HEIGHT)
 
 # Create a tkinter window
 window = tk.Tk()
@@ -35,7 +43,7 @@ state1.pack()
 state2 = tk.Label(overlay_frame, text='state2: 0', fg='white', bg='blue')
 state2.pack()
 
-# Function to toggle the button state
+# Function on button click
 def cleanup():
     button.config(text="Cleaning up")
     window.destroy()
@@ -44,20 +52,21 @@ def cleanup():
 button = tk.Button(window, text="End", command=cleanup)
 button.pack()
 
-def update_overlay():
+agent = Agent()
+
+def run():
     # Capture the screen image
-    screen = ImageGrab.grab()
-    screen = screen.resize((256, 256))
-    print(screen)
+    screen = ImageGrab.grab(bbox=GAME_BBOX)
+    action = agent.choose_action(screen)
 
     state1.config(text='state1: test')
     state2.config(text='state2: test')
 
     # Schedule the next update
-    window.after(1000, update_overlay)  # 1000 milliseconds = 1 second
+    window.after(500, run())  # 1000 milliseconds = 1 second
 
 def main():
-     window.after(1000, update_overlay())
+     window.after(500, run())
 
      # Start the tkinter event loop
      window.mainloop()
