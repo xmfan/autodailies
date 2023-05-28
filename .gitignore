@@ -2,3 +2,4 @@
 *.swp
 keystrokes.csv
 mousestrokes.csv
+notebooks/.ipynb_checkpoints
