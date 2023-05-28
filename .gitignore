@@ -2,6 +2,6 @@
 *.swp
 keystrokes.csv
 mousestrokes.csv
-notebooks/.ipynb_checkpoints
+**/.ipynb_checkpoints
 **/__pycache__/
 tags
