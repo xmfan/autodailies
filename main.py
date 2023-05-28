@@ -66,17 +66,16 @@ def run():
     # Capture the screen image
     screen = ImageGrab.grab(bbox=ARROW_BBOX)
     angle = compute_angle(screen)
-    print(angle)
     action = agent.choose_action(screen)
 
-    state2.config(text='state1: test')
+    state1.config(text=f"angle: {angle}")
     state2.config(text='state2: test')
 
     # Schedule the next update
-    window.after(500, run())  # 1000 milliseconds = 1 second
+    window.after(100, run)  # 1000 milliseconds = 1 second
 
 def main():
-     window.after(500, run())
+     window.after(100, run)
 
      # Start the tkinter event loop
      window.mainloop()
