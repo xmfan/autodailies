@@ -27,6 +27,10 @@ def compute_angle(screen):
     # Find contours in the binary image
     contours, _ = cv.findContours(binary_image, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
 
+    if not contours:
+        # couldn't find arrow
+        return None
+
     # Find the largest contour
     largest_contour = max(contours, key=cv.contourArea)
 
