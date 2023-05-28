@@ -1,6 +1,7 @@
 import tkinter as tk
 from PIL import Image, ImageTk, ImageDraw, ImageFont, ImageGrab
 from model.agent import Agent
+from model.angle import compute_angle
 
 # Only supports this resolution at the moment
 GAME_TOP_LEFT_X = 0
@@ -8,6 +9,13 @@ GAME_TOP_LEFT_Y = 72
 GAME_WIDTH = 512
 GAME_HEIGHT = 512
 GAME_BBOX = (GAME_TOP_LEFT_X, GAME_TOP_LEFT_Y, GAME_TOP_LEFT_X + GAME_WIDTH, GAME_TOP_LEFT_Y + GAME_HEIGHT)
+
+# 720p
+ARROW_TOP_LEFT_X = 105
+ARROW_TOP_LEFT_Y = 185
+ARROW_BOTTOM_RIGHT_X = 130
+ARROW_BOTTOM_RIGHT_Y = 210
+ARROW_BBOX = (ARROW_TOP_LEFT_X, ARROW_TOP_LEFT_Y, ARROW_BOTTOM_RIGHT_X, ARROW_BOTTOM_RIGHT_Y)
 
 # Create a tkinter window
 window = tk.Tk()
@@ -56,10 +64,12 @@ agent = Agent()
 
 def run():
     # Capture the screen image
-    screen = ImageGrab.grab(bbox=GAME_BBOX)
+    screen = ImageGrab.grab(bbox=ARROW_BBOX)
+    angle = compute_angle(screen)
+    print(angle)
     action = agent.choose_action(screen)
 
-    state1.config(text='state1: test')
+    state2.config(text='state1: test')
     state2.config(text='state2: test')
 
     # Schedule the next update

@@ -6,5 +6,4 @@ class Agent:
         pass
 
     def choose_action(self, environment: Image.Image) -> ActionBase:
-        print('Not implemented: returning ActionBase')
         return ActionBase()
