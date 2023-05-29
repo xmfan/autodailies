@@ -10,3 +10,7 @@ class Coordinate:
 
     def __sub__(self, other):
         return Coordinate(self.x - other.x, self.y - other.y)
+
+    def asTuple(self):
+        return (self.x, self.y)
+
