@@ -11,6 +11,9 @@ class Coordinate:
     def __sub__(self, other):
         return Coordinate(self.x - other.x, self.y - other.y)
 
+    def __mul__(self, scalar):
+        return Coordinate(self.x * scalar, self.y * scalar)
+
     def asTuple(self):
         return (self.x, self.y)
 

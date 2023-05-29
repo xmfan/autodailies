@@ -7,6 +7,7 @@ from model.agent import Agent
 from model.angle import compute_angle
 from model.localization import Localizer
 from model.coordinate import Coordinate
+import threading
 
 # Only supports 720p
 Y_OFFSET = 72 # Mac UIs
@@ -84,6 +85,17 @@ state1.pack()
 state2 = tk.Label(overlay_frame, text='state2: 0', fg='white', bg='blue')
 state2.pack()
 
+def runRoutine():
+    global agent
+    thread = threading.Thread(target=agent.runRoutine, args=("routines/test.csv",))
+
+    thread.daemon = True
+    thread.start()
+
+# Create a button that toggles the boolean value
+button = tk.Button(window, text="Routine", command=runRoutine)
+button.pack()
+
 # Function on button click
 def cleanup():
     button.config(text="Cleaning up")
@@ -110,13 +122,14 @@ def init():
     window.after(2000, run)
 
 def run():
+    global agent
     global localizer
     arrow_img = ImageGrab.grab(bbox=ARROW_BBOX)
     angle = compute_angle(arrow_img)
 
     minimap_img = ImageGrab.grab(bbox=MINIMAP_BBOX)
     position: Coordinate = localizer.localize(minimap_img)
-    # action = agent.choose_action(screen)
+    agent.act(angle, minimap_img, position)
 
     state1.config(text=f"orientation: {angle}")
     state2.config(text=f"({position.x}, {position.y})")
